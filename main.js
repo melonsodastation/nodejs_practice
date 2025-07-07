@@ -1,29 +1,15 @@
 const http = require("http");
 const fs = require("fs");
-// import * as fs from 'fs';
+const url = require("url");
 
 const app = http.createServer((request, response) => {
-  let url = request.url;
-  if (request.url == "/") {
-    url = "/index.html";
+  let _url = request.url;
+  let queryData = url.parse(_url, true).query;
+  if (_url == "/") {
+    _url = "/index.html";
   }
   response.writeHead(200);
-  response.end(fs.readFileSync(__dirname + url));
+  response.end(queryData.id);
 });
 
 app.listen(3000);
-
-// var http = require("http");
-// var fs = require("fs");
-// var app = http.createServer(function (request, response) {
-//   var url = request.url;
-//   if (request.url == "/") {
-//     url = "/index.html";
-//   }
-//   if (request.url == "/favicon.ico") {
-//     return response.writeHead(404);
-//   }
-//   response.writeHead(200);
-//   response.end(fs.readFileSync(__dirname + url));
-// });
-// app.listen(3000);
